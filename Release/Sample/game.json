@@ -1,0 +1,100 @@
+{
+	"width": 720,
+	"height": 400,
+	"fps": 30,
+	"main": "./script/main.js",
+	"assets": {
+		"player": {
+			"type": "image",
+			"width": 32,
+			"height": 32,
+			"path": "image/player.png"
+		},
+		"shot": {
+			"type": "image",
+			"width": 16,
+			"height": 16,
+			"path": "image/shot.png"
+		},
+		"se": {
+			"type": "audio",
+			"path": "audio/se",
+			"systemId": "sound",
+			"duration": 250,
+			"hint": {
+				"extensions": [
+					".aac",
+					".ogg"
+				]
+			}
+		},
+		"main": {
+			"type": "script",
+			"path": "script/main.js",
+			"global": true
+		},
+		"node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.wasm": {
+			"type": "binary",
+			"path": "node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.wasm"
+		},
+		"EffekseerRenderer": {
+			"type": "script",
+			"path": "script/EffekseerRenderer.js",
+			"global": true
+		},
+		"assets/Effekseer/Texture/Aurora.png": {
+			"type": "image",
+			"path": "assets/Effekseer/Texture/Aurora.png",
+			"width": 128,
+			"height": 128
+		},
+		"assets/Effekseer/Texture/Line01.png": {
+			"type": "image",
+			"path": "assets/Effekseer/Texture/Line01.png",
+			"width": 64,
+			"height": 256
+		},
+		"assets/Effekseer/Texture/Particle02.png": {
+			"type": "image",
+			"path": "assets/Effekseer/Texture/Particle02.png",
+			"width": 128,
+			"height": 128
+		},
+		"assets/Effekseer/Texture/Shock_wave_ring0011.png": {
+			"type": "image",
+			"path": "assets/Effekseer/Texture/Shock_wave_ring0011.png",
+			"width": 128,
+			"height": 100
+		},
+		"assets/Effekseer/Texture/burst02_red.png": {
+			"type": "image",
+			"path": "assets/Effekseer/Texture/burst02_red.png",
+			"width": 771,
+			"height": 759
+		},
+		"assets/Effekseer/Blow5.efkefc": {
+			"type": "binary",
+			"path": "assets/Effekseer/Blow5.efkefc"
+		}
+	},
+	"environment": {
+		"sandbox-runtime": "3",
+		"features": [
+			"WebAssembly"
+		]
+	},
+	"renderers": [
+		{
+			"type": "webgl",
+			"options": {
+				"enableDepthBuffer": true
+			}
+		}
+	],
+	"moduleMainScripts": {
+		"@akashic-extension/effekseer-for-akashic-engine": "node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.js"
+	},
+	"globalScripts": [
+		"node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.js"
+	]
+}

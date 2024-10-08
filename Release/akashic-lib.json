@@ -1,0 +1,8 @@
+{
+      "assetList": [
+            {
+                  "type": "binary",
+                  "path": "effekseer.wasm"
+            }
+      ]
+}

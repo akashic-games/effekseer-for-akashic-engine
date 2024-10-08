@@ -1,0 +1,40 @@
+{
+  "name": "effekseer-for-akashic-engine-sample",
+  "private": true,
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "postinstall": "npm run build",
+    "build": "rimraf ./script && tsc && akashic-cli-scan asset script",
+    "update": "akashic-cli-scan asset && akashic-cli-scan globalScripts",
+    "lint": "eslint -c .eslintrc.js \"src/**/*.ts\" --fix",
+    "start": "akashic-sandbox .",
+    "_start": "akashic-cli-serve -s nicolive",
+    "export-zip": "rimraf game.zip && akashic-cli-export zip -o game.zip -s",
+    "export-html": "rimraf game && akashic-cli-export html -o game",
+    "test": "jest"
+  },
+  "author": "DWANGO Co., Ltd.",
+  "license": "MIT",
+  "devDependencies": {
+    "@akashic/akashic-cli-export": "^1.7.51",
+    "@akashic/akashic-cli-scan": "^0.17.7",
+    "@akashic/akashic-cli-serve": "^1.16.16",
+    "@akashic/akashic-engine": "^3.17.1",
+    "@akashic/akashic-sandbox": "^0.28.22",
+    "@akashic/eslint-config": "^1.1.0",
+    "@akashic/headless-akashic": "^3.0.1",
+    "@types/jest": "^29.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^29.1.1",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^29.0.3",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@akashic-extension/effekseer-for-akashic-engine": "file:../akashic-extension-effekseer-for-akashic-engine-1.0.0.tgz"
+  }
+}

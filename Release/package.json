@@ -1,0 +1,31 @@
+{
+  "name": "@akashic-extension/effekseer-for-akashic-engine",
+  "version": "1.0.0",
+  "description": "Effekseer runtime extension for Akashic Engine",
+  "author": "DWANGO Co., Ltd.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "akashic-games/effekseer-for-akashic-engine.git"
+  },
+  "scripts": {
+    "doc": "typedoc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "main": "effekseer.js",
+  "types": "./effekseer.d.ts",
+  "files": [
+    "akashic-lib.json",
+    "effekseer.js",
+    "effekseer.d.ts",
+    "effekseer.wasm"
+  ],
+  "publishConfig": {
+    "@akashic-extension:registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@akashic/akashic-engine": "^3.18.0",
+    "typedoc": "^0.25.13"
+  }
+}
