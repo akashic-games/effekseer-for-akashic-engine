@@ -12,13 +12,14 @@
     "doc": "typedoc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "main": "effekseer.js",
-  "types": "./effekseer.d.ts",
+  "main": "Release/effekseer.js",
+  "types": "Release/effekseer.d.ts",
   "files": [
     "akashic-lib.json",
-    "effekseer.js",
-    "effekseer.d.ts",
-    "effekseer.wasm"
+    "LICENSE-Effekseer",
+    "Release/effekseer.js",
+    "Release/effekseer.d.ts",
+    "Release/effekseer.wasm"
   ],
   "publishConfig": {
     "@akashic-extension:registry": "https://registry.npmjs.org/",
