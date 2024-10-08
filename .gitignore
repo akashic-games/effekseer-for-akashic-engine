@@ -2,6 +2,8 @@
 /build_wasm/
 /Release/*
 !/Release/effekseer.d.ts
+!/Release/effekseer.js
+!/Release/effekseer.wasm
 !/Release/package.json
 !/Release/package-lock.json
 !/Release/akashic-lib.json

@@ -1,0 +1,32 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+
+env:
+  TARGET_DIR: Release
+  NODE_VERSION: 18
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish
+    defaults:
+      run:
+        working-directory: ${{ env.TARGET_DIR }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: ${{ env.TARGET_DIR }}/package-lock.json
+      - name: Build and Publish
+        run: |
+            npm ci # clean install
+            npm run build
+            npm publish --dry-run
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
