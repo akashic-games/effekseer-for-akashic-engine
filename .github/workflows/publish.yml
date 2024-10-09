@@ -22,6 +22,6 @@ jobs:
       - name: Build and Publish
         run: |
             npm ci # clean install
-            npm publish --dry-run
+            npm publish
         env:
             NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
