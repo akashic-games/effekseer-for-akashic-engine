@@ -4,16 +4,12 @@ on:
   workflow_dispatch:
 
 env:
-  TARGET_DIR: Release
   NODE_VERSION: 18
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
     name: Publish
-    defaults:
-      run:
-        working-directory: ${{ env.TARGET_DIR }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
