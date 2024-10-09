@@ -7,7 +7,7 @@ function main(_param: g.GameMainParameterObject): void {
 		assetIds: ["player", "shot", "se"],
 		assetPaths: [
 			"/assets/Effekseer/**/*",
-			"/node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.wasm"
+			"/node_modules/@akashic-extension/effekseer-for-akashic-engine/Release/effekseer.wasm"
 		]
 	});
 
@@ -69,7 +69,7 @@ function main(_param: g.GameMainParameterObject): void {
 		prepare: done => {
 			// Effekseer を初期化する。
 			// 初期化が完了してからシーンが開始されるよう、prepare 内で初期化を行う。
-			const wasmBinaryAsset = scene.asset.getBinary("/node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.wasm");
+			const wasmBinaryAsset = scene.asset.getBinary("/node_modules/@akashic-extension/effekseer-for-akashic-engine/Release/effekseer.wasm");
 			effekseer.initRuntimeWithWasmBinary(
 				wasmBinaryAsset.data,
 				() => {

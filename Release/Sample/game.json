@@ -33,10 +33,6 @@
 			"path": "script/main.js",
 			"global": true
 		},
-		"node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.wasm": {
-			"type": "binary",
-			"path": "node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.wasm"
-		},
 		"EffekseerRenderer": {
 			"type": "script",
 			"path": "script/EffekseerRenderer.js",
@@ -75,6 +71,10 @@
 		"assets/Effekseer/Blow5.efkefc": {
 			"type": "binary",
 			"path": "assets/Effekseer/Blow5.efkefc"
+		},
+		"node_modules/@akashic-extension/effekseer-for-akashic-engine/Release/effekseer.wasm": {
+			"type": "binary",
+			"path": "node_modules/@akashic-extension/effekseer-for-akashic-engine/Release/effekseer.wasm"
 		}
 	},
 	"environment": {
@@ -92,9 +92,9 @@
 		}
 	],
 	"moduleMainScripts": {
-		"@akashic-extension/effekseer-for-akashic-engine": "node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.js"
+		"@akashic-extension/effekseer-for-akashic-engine": "node_modules/@akashic-extension/effekseer-for-akashic-engine/Release/effekseer.js"
 	},
 	"globalScripts": [
-		"node_modules/@akashic-extension/effekseer-for-akashic-engine/effekseer.js"
+		"node_modules/@akashic-extension/effekseer-for-akashic-engine/Release/effekseer.js"
 	]
 }

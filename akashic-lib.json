@@ -2,7 +2,7 @@
       "assetList": [
             {
                   "type": "binary",
-                  "path": "effekseer.wasm"
+                  "path": "Release/effekseer.wasm"
             }
       ]
 }
