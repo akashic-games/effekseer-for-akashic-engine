@@ -1,6 +1,6 @@
 {
   "name": "@akashic-extension/effekseer-for-akashic-engine",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0",
   "description": "Effekseer runtime extension for Akashic Engine",
   "author": "DWANGO Co., Ltd.",
   "license": "MIT",
