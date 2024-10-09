@@ -35,6 +35,6 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@akashic-extension/effekseer-for-akashic-engine": "file:../../akashic-extension-effekseer-for-akashic-engine-1.0.0-beta.0.tgz"
+    "@akashic-extension/effekseer-for-akashic-engine": "^1.0.0"
   }
 }
