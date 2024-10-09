@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
-          cache-dependency-path: ${{ env.TARGET_DIR }}/package-lock.json
+          cache-dependency-path: package-lock.json
       - name: Build and Publish
         run: |
             npm ci # clean install
