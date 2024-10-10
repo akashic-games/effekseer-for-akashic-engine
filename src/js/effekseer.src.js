@@ -9,7 +9,7 @@ const effekseer = (() => {
   let _onRuntimeInitialized = () => {
     // C++ functions
     Core = {
-      Init: Module.cwrap("EffekseerInit", "number", ["number", "number", "number"]),
+      Init: Module.cwrap("EffekseerInit", "number", ["number", "number", "number", "number"]),
       Terminate: Module.cwrap("EffekseerTerminate", "void", ["number"]),
       Update: Module.cwrap("EffekseerUpdate", "void", ["number", "number"]),
       BeginUpdate: Module.cwrap("EffekseerBeginUpdate", "void", ["number"]),
@@ -651,12 +651,20 @@ const effekseer = (() => {
       this.current_active_texture_id = null;
 
       this.ext_vao = this._gl.getExtension('OES_vertex_array_object');
+      let vao = null;
       if (this.ext_vao != null) {
-        this.effekseer_vao = this.ext_vao.createVertexArrayOES();
+        vao = this.ext_vao.createVertexArrayOES();
       }
       else if ('createVertexArray' in this._gl) {
         this.isWebGL2VAOEnabled = true;
-        this.effekseer_vao = this._gl.createVertexArray();
+        vao = this._gl.createVertexArray();
+      }
+      if (vao) {
+        let GL = Module.GL;
+        let id = GL.getNewId(GL.vaos);
+        vao.name = id;
+        GL.vaos[id] = vao;
+        this.effekseer_vao = vao;
       }
     }
 
@@ -744,6 +752,15 @@ const effekseer = (() => {
       var instanceMaxCount = 4000;
       var squareMaxCount = 10000;
       var enableExtensionsByDefault = true;
+      var enablePremultipliedAlpha = false;
+
+      // <<<<<<< ORIGINAL
+      /*
+      window.gl = this._gl;
+      */
+      // =======
+      Module["__akashic__"].gl = this._gl;
+      // >>>>>>> CHANGED
 
       if (settings) {
         if ("instanceMaxCount" in settings) {
@@ -755,16 +772,33 @@ const effekseer = (() => {
         if ("enableExtensionsByDefault" in settings) {
           enableExtensionsByDefault = settings.enableExtensionsByDefault;
         }
-      }
-      // <<<<<<< ORIGINAL
-      /*
-      window.gl = this._gl;
+        if ("enablePremultipliedAlpha" in settings) {
+          enablePremultipliedAlpha = settings.enablePremultipliedAlpha;
+        }
+        if ("enableTimerQuery" in settings && settings.enableTimerQuery) {
+          // <<<<<<< ORIGINAL
+          /*
+          window.ext_timer = window.gl.getExtension("EXT_disjoint_timer_query_webgl2");
+          */
+          // =======
+          Module["__akashic__"].ext_timer = Module["__akashic__"].gl.getExtension("EXT_disjoint_timer_query_webgl2");
+          // >>>>>>> CHANGED
+          this._availableList = [];
+          this._usingList = [];
+          this._drawCount = 0;
+          this._accumulatedDrawTime = 0;
 
-      window.ext_timer = window.gl.getExtension("EXT_disjoint_timer_query_webgl2");
-      */
-      // =======
-      Module["__akashic__"].gl = this._gl;
-      // >>>>>>> CHANGED
+          if ("onTimerQueryReport" in settings) {
+            this._onTimerQueryReport = settings.onTimerQueryReport;
+          }
+          if ("timerQueryReportIntervalCount" in settings) {
+            this._timerQueryReportIntervalCount = settings.timerQueryReportIntervalCount;
+          } else {
+            this._timerQueryReportIntervalCount = 300;
+          }
+        }
+      }
+
 
       // Setup native OpenGL context
       this.ctx = Module.GL.registerContext(webglContext, {
@@ -776,7 +810,7 @@ const effekseer = (() => {
 
       // Initializes Effekseer core.
       this.contextStates.save();
-      this.nativeptr = Core.Init(instanceMaxCount, squareMaxCount, enableExtensionsByDefault);
+      this.nativeptr = Core.Init(instanceMaxCount, squareMaxCount, enableExtensionsByDefault, enablePremultipliedAlpha);
       this.contextStates.restore();
     }
 
@@ -806,6 +840,8 @@ const effekseer = (() => {
      * Main rendering.
      */
     draw() {
+      const availableQuery = this._startQuery();
+
       this._makeContextCurrent();
 
       let program = null;
@@ -828,6 +864,77 @@ const effekseer = (() => {
 
         // Restore WebGL states
         this._gl.useProgram(program);
+      }
+
+      this._endQuery(availableQuery);
+    }
+
+    _startQuery() {
+      // <<<<<<<< ORIGINAL
+      /*
+      if (window.ext_timer != null) {
+        // Begin draw time query
+        const availableQuery = this._availableList.length ? this._availableList.shift() : this._gl.createQuery();
+        this._gl.beginQuery(window.ext_timer.TIME_ELAPSED_EXT, availableQuery);
+
+        return availableQuery;
+      }
+      */
+      // =======
+      const ext_timer = Module["__akashic__"].ext_timer;
+      if (ext_timer != null) {
+        // Begin draw time query
+        const availableQuery = this._availableList.length ? this._availableList.shift() : this._gl.createQuery();
+        this._gl.beginQuery(ext_timer.TIME_ELAPSED_EXT, availableQuery);
+
+        return availableQuery;
+      }
+      // >>>>>>> CHANGED
+    }
+
+    _endQuery(availableQuery) {
+      // <<<<<<<< ORIGINAL
+      /*
+      if (window.ext_timer != null) {
+        // End draw time query
+        this._gl.endQuery(window.ext_timer.TIME_ELAPSED_EXT);
+        this._usingList.push(availableQuery);
+
+        // Get draw time query
+        const disjoint = this._gl.getParameter(window.ext_timer.GPU_DISJOINT_EXT);
+      */
+      // =======
+      const ext_timer = Module["__akashic__"].ext_timer;
+      if (ext_timer != null) {
+        // End draw time query
+        this._gl.endQuery(ext_timer.TIME_ELAPSED_EXT);
+        this._usingList.push(availableQuery);
+
+        // Get draw time query
+        const disjoint = this._gl.getParameter(ext_timer.GPU_DISJOINT_EXT);
+      // >>>>>>> CHANGED
+        if (disjoint) {
+          this._usingList.forEach(query => this._gl.deleteQuery(query));
+        } else {
+          const usingQuery = this._usingList.length ? this._usingList[0] : null;
+          if (usingQuery) {
+            const resultAvailable = this._gl.getQueryParameter(usingQuery, this._gl.QUERY_RESULT_AVAILABLE);
+            if (resultAvailable) {
+              const result = this._gl.getQueryParameter(usingQuery, this._gl.QUERY_RESULT);
+              this._accumulatedDrawTime += result;
+              if (this._drawCount >= this._timerQueryReportIntervalCount) {
+                const averageDrawTime = this._accumulatedDrawTime / this._drawCount;
+                this._drawCount = 0;
+                this._accumulatedDrawTime = 0;
+                if (this._onTimerQueryReport != null) {
+                  this._onTimerQueryReport(averageDrawTime);
+                }
+              }
+              this._drawCount++;
+              this._availableList.push(this._usingList.shift());
+            }
+          }
+        }
       }
     }
 
@@ -985,8 +1092,8 @@ const effekseer = (() => {
     */
     /*
     /**
-     * Load the effect data file (and resources).
-     * @param {string|ArrayBuffer} path A URL/ArrayBuffer of effect package file (*.efkpkg)
+     * Load the effect package file (resources included in the package).
+     * @param {string|ArrayBuffer} data A URL/ArrayBuffer of effect package file (*.efkpkg)
      * @param {Object} Unzip a Unzip object
      * @param {number} scale A magnification rate for the effect. The effect is loaded magnificating with this specified number.
      * @param {function=} onload A function that is called at loading complete
@@ -1003,14 +1110,14 @@ const effekseer = (() => {
       effect.onload = onload;
       effect.onerror = onerror;
 
-      if (typeof path === "string") {
-        const dirIndex = path.lastIndexOf("/");
-        effect.baseDir = (dirIndex >= 0) ? path.slice(0, dirIndex + 1) : "";
-        _loadBinFile(path, buffer => {
+      if (typeof data === "string") {
+        const dirIndex = data.lastIndexOf("/");
+        effect.baseDir = (dirIndex >= 0) ? data.slice(0, dirIndex + 1) : "";
+        _loadBinFile(data, buffer => {
           effect._loadFromPackage(buffer, Unzip);
         }, effect.onerror);
-      } else if (path instanceof ArrayBuffer) {
-        const buffer = path;
+      } else if (data instanceof ArrayBuffer) {
+        const buffer = data;
         effect._loadFromPackage(buffer, Unzip);
       }
 
