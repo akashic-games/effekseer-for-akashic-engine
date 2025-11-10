@@ -29,4 +29,4 @@ jobs:
       - name: Build and Publish
         run: |
             npm ci # clean install
-            npm publish
+            npm publish --provenance
