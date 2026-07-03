@@ -28,5 +28,12 @@
   "devDependencies": {
     "@akashic/akashic-engine": "^3.18.0",
     "typedoc": "^0.25.13"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11.11.0",
+      "onFail": "error"
+    }
   }
 }
